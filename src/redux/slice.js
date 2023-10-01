@@ -5,9 +5,13 @@ export const movementSlice = createSlice({
     initialState: {
         position: 0,
         selectedFruit: fruits[parseInt(Math.random() * fruits.length - 1)],
-        intervalTime: 5000,
-        dropInterval: 1000,
-        isPlaying: true
+        intervalTime: 2500,
+        dropInterval: 500,
+        isPlaying: true,
+        lives: 3,
+        intervals: [],
+        score: 0,
+        gameOver: false
     },
     reducers: {
         left: state => {
@@ -28,9 +32,22 @@ export const movementSlice = createSlice({
         },
         setIsPlaying: state => {
             state.isPlaying = !state.isPlaying
+        },
+        setLives: state => {
+            state.lives -= 1
+        },
+        setIntervals: (state, interval) => {
+            state.intervals.push(interval.payload)
+        },
+        setScore: state => {
+            state.score += 1
+        },
+        setGameOver: state => {
+            state.gameOver = true
         }
+
     }
 })
 
-export const { left, right, setRandomFruit, increaseLevel, dropInterval, setIsPlaying } = movementSlice.actions
+export const { left, right, setRandomFruit, increaseLevel, dropInterval, setIsPlaying, setLives, setScore } = movementSlice.actions
 

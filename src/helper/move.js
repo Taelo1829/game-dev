@@ -1,5 +1,6 @@
 import store from "../redux/store"
-import { left, right } from "../redux/slice"
+import { left, right, setLives, setScore } from "../redux/slice"
+import { useDispatch } from "react-redux";
 
 store.subscribe(() => { })
 export function move(e, pic) {
@@ -23,7 +24,7 @@ export function dropFruit() {
     let canvasHeight = canvas.getClientRects()[0].height - 155
     let fruits = ["apple", "banana", "cherry", "pinapple", "strawberry"]
     let selectedFruit = fruits[parseInt(Math.random() * fruits.length - 1)]
-
+    let hero = document.getElementById("hero")
     let fruit = document.createElement("img")
     fruit.width = 50
     fruit.style.position = "absolute"
@@ -41,6 +42,17 @@ export function dropFruit() {
             if (height < canvasHeight) {
                 fruit.style.top = height + 30 + "px"
             } else {
+                let fruitPosition = splitPx(fruit.style.left);
+                let heroPositionStart = splitPx(hero.style.left);
+                let heroPositionEnd = heroPositionStart + hero.getClientRects()[0].width
+                let fruitEaten = fruitPosition > heroPositionStart && fruitPosition < heroPositionEnd
+                if (fruitEaten) {
+                    if (selectedFruit === store.getState().selectedFruit) {
+                        store.dispatch(setLives())
+                    } else {
+                        store.dispatch(setScore())
+                    }
+                }
                 stopFruit()
             }
         }, interval)
@@ -50,4 +62,9 @@ export function dropFruit() {
         fruit.style.display = "none"
         clearInterval(timeout)
     }
+
+}
+
+function splitPx(number) {
+    return parseInt(number.split("px")[0])
 }
