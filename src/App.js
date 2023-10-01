@@ -26,7 +26,7 @@ function App() {
     setLives(store.getState().lives)
     setScore(store.getState().score);
     if (store.getState().gameOver) {
-      setGameOver("")
+      setGameOver("flex")
     }
   })
 
@@ -67,7 +67,9 @@ function App() {
       </div>
       <div className='hero-section'>
         <div id="canvas"></div>
-        <div className='gameOver' style={{ display: gameOver }}></div>
+        <div className='gameOver' style={{ display: gameOver }}>
+          <h1>GAME OVER</h1>
+        </div>
         <img src="/img/hero.png" width={150} height={150} id="hero" className='hero' alt="hero" />
       </div>
     </div>

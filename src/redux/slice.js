@@ -49,5 +49,6 @@ export const movementSlice = createSlice({
     }
 })
 
-export const { left, right, setRandomFruit, increaseLevel, dropInterval, setIsPlaying, setLives, setScore } = movementSlice.actions
+export const {
+    left, right, setRandomFruit, increaseLevel, dropInterval, setIsPlaying, setLives, setScore, setGameOver } = movementSlice.actions
 

@@ -1,5 +1,5 @@
 import store from "../redux/store"
-import { left, right, setLives, setScore } from "../redux/slice"
+import { left, right, setGameOver, setLives, setScore } from "../redux/slice"
 import { useDispatch } from "react-redux";
 
 store.subscribe(() => { })
@@ -48,7 +48,11 @@ export function dropFruit() {
                 let fruitEaten = fruitPosition > heroPositionStart && fruitPosition < heroPositionEnd
                 if (fruitEaten) {
                     if (selectedFruit === store.getState().selectedFruit) {
-                        store.dispatch(setLives())
+                        if (store.getState().lives > 1) {
+                            store.dispatch(setLives())
+                        } else {
+                            store.dispatch(setGameOver())
+                        }
                     } else {
                         store.dispatch(setScore())
                     }
